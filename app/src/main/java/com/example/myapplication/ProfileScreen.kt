@@ -18,6 +18,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.ui.theme.ProfileTheme
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+import com.example.myapplication.R
+import androidx.compose.ui.layout.ContentScale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,16 +95,26 @@ fun ProfileScreen() {
                 contentAlignment = Alignment.Center
             ) {
 
-                Box(
+                Image(
+                    painter = painterResource(id = R.drawable.amber),
+                    contentDescription = "Profile Picture",
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(120.dp)
+                        .size(280.dp)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.primaryContainer)
                         .border(
                             4.dp,
                             MaterialTheme.colorScheme.primary,
                             CircleShape
                         )
+                )
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .size(22.dp)
+                        .clip(CircleShape)
+                        .background(Color.Green)
+                        .border(2.dp, Color.White, CircleShape)
                 )
 
                 Box(
@@ -159,9 +173,9 @@ fun ProfileScreen() {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
 
-                    Stat("120", "Posts")
+                    Stat("105", "Posts")
                     Stat("1.5K", "Followers")
-                    Stat("450", "Following")
+                    Stat("452", "Following")
 
                 }
 
