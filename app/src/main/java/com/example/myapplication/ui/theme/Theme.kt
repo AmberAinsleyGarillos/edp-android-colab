@@ -56,3 +56,35 @@ fun MyApplicationTheme(
         content = content
     )
 }
+
+
+private val LightColors = lightColorScheme(
+    primary = PrimaryLight,
+    onPrimary = OnPrimaryLight,
+    primaryContainer = PrimaryContainerLight,
+    secondary = SecondaryLight,
+    surface = SurfaceLight,
+    onSurfaceVariant = OnSurfaceVariantLight
+)
+
+private val DarkColors = darkColorScheme(
+    primary = PrimaryDark,
+    onPrimary = OnPrimaryDark,
+    primaryContainer = PrimaryContainerDark,
+    secondary = SecondaryDark,
+    surface = SurfaceDark,
+    onSurfaceVariant = OnSurfaceVariantDark
+)
+
+@Composable
+fun ProfileTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
+
+    MaterialTheme(
+        colorScheme = if (darkTheme) DarkColors else LightColors,
+        typography = androidx.compose.material3.Typography(),
+        content = content
+    )
+}
