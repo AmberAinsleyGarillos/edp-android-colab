@@ -3,11 +3,16 @@ package com.example.myapplication
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,71 +24,57 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.ui.theme.ProfileTheme
 
+// Maroon Colors
+val Maroon = Color(0xFF800000)
+val LightMaroon = Color(0xFFB03060)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen() {
 
-    Scaffold(
+    val isDark = isSystemInDarkTheme()
 
-        containerColor = MaterialTheme.colorScheme.surface,
+    val titleColor = if (isDark) Color.White else Maroon
+    val subtitleColor = if (isDark) Color.LightGray else Color.DarkGray
+    val valueColor = if (isDark) Color.White else Color.Black
+    val labelColor = if (isDark) Color(0xFFBDBDBD) else Color.Gray
+
+    Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
 
         topBar = {
-
             TopAppBar(
-
                 title = {
-                    Text("My Profile")
+                    Text(
+                        text = "My Profile",
+                        color = Color.White
+                    )
                 },
-
                 navigationIcon = {
-
                     IconButton(onClick = {}) {
-                        Icon(Icons.Default.Menu, null)
+                        Icon(Icons.Default.Menu, null, tint = Color.White)
                     }
-
                 },
-
                 actions = {
-
                     IconButton(onClick = {}) {
-                        Icon(Icons.Default.MoreVert, null)
+                        Icon(Icons.Default.MoreVert, null, tint = Color.White)
                     }
-
                 },
-
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                    containerColor = Maroon
                 )
-
             )
-
-        },
-
-        floatingActionButton = {
-
-            FloatingActionButton(
-                onClick = {}
-            ) {
-
-                Icon(Icons.Default.Add, null)
-
-            }
-
         }
 
     ) { padding ->
 
         Column(
-
             modifier = Modifier
                 .padding(padding)
                 .padding(20.dp)
                 .fillMaxSize(),
-
             horizontalAlignment = Alignment.CenterHorizontally,
-
             verticalArrangement = Arrangement.spacedBy(20.dp)
-
         ) {
 
             Box(
@@ -95,13 +86,16 @@ fun ProfileScreen() {
                     modifier = Modifier
                         .size(120.dp)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.primaryContainer)
-                        .border(
-                            4.dp,
-                            MaterialTheme.colorScheme.primary,
-                            CircleShape
-                        )
-                )
+                        .background(LightMaroon)
+                        .border(4.dp, Maroon, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "AG",
+                        color = Color.White,
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                }
 
                 Box(
                     modifier = Modifier
@@ -114,64 +108,21 @@ fun ProfileScreen() {
             }
 
             Text(
-                "Amber Ainsley A. Garillos",
-                style = MaterialTheme.typography.headlineSmall
+                text = "AMBER AINSLEY A. GARILLOS",
+                style = MaterialTheme.typography.headlineSmall,
+                color = titleColor
             )
 
             Text(
-                "BSIT-3 Student",
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = "BSIT 3-1",
+                color = subtitleColor
             )
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-
-                Button(
-                    onClick = {},
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text("Message")
-                }
-
-                OutlinedButton(
-                    onClick = {},
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text("Follow")
-                }
-
-            }
-
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                )
-            ) {
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-
-                    Stat("120", "Posts")
-                    Stat("1.5K", "Followers")
-                    Stat("450", "Following")
-
-                }
-
-            }
-
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                    containerColor = MaterialTheme.colorScheme.surface
                 )
             ) {
 
@@ -180,62 +131,88 @@ fun ProfileScreen() {
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
 
-                    Contact(Icons.Default.Email, "agarillos73200@liceo.edu.ph")
-                    Contact(Icons.Default.Phone, "+63 9091457196")
-                    Contact(Icons.Default.LocationOn, "Cagayan de Oro City")
+                    InfoRow(
+                        icon = Icons.Default.Person,
+                        label = "Full Name",
+                        value = "Amber Ainsley Anas Garillos",
+                        labelColor = labelColor,
+                        valueColor = valueColor
+                    )
 
+                    InfoRow(
+                        icon = Icons.Default.Person,
+                        label = "Course",
+                        value = "Bachelor of Science in Information Technology",
+                        labelColor = labelColor,
+                        valueColor = valueColor
+                    )
+
+                    InfoRow(
+                        icon = Icons.Default.Person,
+                        label = "Section",
+                        value = "BSIT 3-1",
+                        labelColor = labelColor,
+                        valueColor = valueColor
+                    )
+
+                    InfoRow(
+                        icon = Icons.Default.Phone,
+                        label = "Mobile Number",
+                        value = "+63 9091457196",
+                        labelColor = labelColor,
+                        valueColor = valueColor
+                    )
+
+                    InfoRow(
+                        icon = Icons.Default.Email,
+                        label = "Email Address",
+                        value = "agarillos73200@liceo.edu.ph",
+                        labelColor = labelColor,
+                        valueColor = valueColor
+                    )
                 }
-
             }
-
         }
-
     }
-
 }
 
 @Composable
-fun Contact(
+fun InfoRow(
     icon: ImageVector,
-    text: String
+    label: String,
+    value: String,
+    labelColor: Color,
+    valueColor: Color
 ) {
 
     Row(
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        Icon(icon, null)
-
-        Spacer(modifier = Modifier.width(8.dp))
-
-        Text(text)
-
-    }
-
-}
-
-@Composable
-fun Stat(
-    number: String,
-    label: String
-) {
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Text(
-            number,
-            style = MaterialTheme.typography.titleLarge
+        Icon(
+            imageVector = icon,
+            contentDescription = label,
+            tint = Maroon
         )
 
-        Text(
-            label,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        Spacer(modifier = Modifier.width(16.dp))
 
+        Column {
+
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelMedium,
+                color = labelColor
+            )
+
+            Text(
+                text = value,
+                style = MaterialTheme.typography.bodyLarge,
+                color = valueColor
+            )
+        }
     }
-
 }
 
 @Preview(showBackground = true)
