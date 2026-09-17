@@ -53,4 +53,13 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    val cx = "1.6.1"
+
+    implementation("androidx.camera:camera-camera2:$cx")
+    implementation("androidx.camera:camera-lifecycle:$cx")
+    implementation("androidx.camera:camera-compose:$cx")
+
+    implementation("com.google.android.gms:play-services-location:21.4.0")
+
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.10.0")
 }
