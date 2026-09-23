@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -38,6 +39,10 @@ fun LoginScreen(
 
     var password by rememberSaveable {
         mutableStateOf("")
+    }
+
+    var showPassword by rememberSaveable {
+        mutableStateOf(false)
     }
 
     val isLoading = state is AuthUiState.Loading
@@ -77,7 +82,23 @@ fun LoginScreen(
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password
             ),
-            visualTransformation = PasswordVisualTransformation(),
+            visualTransformation =
+                if (showPassword) {
+                    VisualTransformation.None
+                } else {
+                    PasswordVisualTransformation()
+                },
+            trailingIcon = {
+                TextButton(
+                    onClick = {
+                        showPassword = !showPassword
+                    }
+                ) {
+                    Text(
+                        if (showPassword) "Hide" else "Show"
+                    )
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -97,9 +118,7 @@ fun LoginScreen(
         ) {
             if (isLoading) {
                 CircularProgressIndicator(
-                    modifier = Modifier
-                        .padding(2.dp)
-                        .then(Modifier.fillMaxWidth(0.08f)),
+                    modifier = Modifier.padding(2.dp),
                     strokeWidth = 2.dp
                 )
             } else {
